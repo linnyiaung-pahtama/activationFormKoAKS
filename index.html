@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <script>
+      (function () {
+        var props = ['fetch', 'XMLHttpRequest', 'Request', 'Response', 'Headers', 'WebSocket'];
+
+        function patchTargetProp(target, prop) {
+          if (!target) return;
+          try {
+            var desc = Object.getOwnPropertyDescriptor(target, prop);
+            if (desc && desc.get && !desc.set && desc.configurable !== false) {
+              var origGet = desc.get;
+              var overridden = undefined;
+              var hasOverride = false;
+              Object.defineProperty(target, prop, {
+                configurable: true,
+                enumerable: desc.enumerable !== false,
+                get: function () {
+                  if (hasOverride) return overridden;
+                  var receiver = this && this !== target ? this : window;
+                  var val = origGet.call(receiver);
+                  if (prop === 'fetch' && typeof val === 'function') {
+                    return val.bind(window);
+                  }
+                  return val;
+                },
+                set: function (nextVal) {
+                  if (nextVal !== undefined) {
+                    overridden = nextVal;
+                    hasOverride = true;
+                  }
+                },
+              });
+            }
+          } catch (_) {}
+        }
+
+        function ensureWritableGlobals() {
+          var targets = [
+            typeof window !== 'undefined' ? window : null,
+            typeof Window !== 'undefined' ? Window.prototype : null,
+          ];
+          for (var t = 0; t < targets.length; t++) {
+            for (var p = 0; p < props.length; p++) {
+              patchTargetProp(targets[t], props[p]);
+            }
+          }
+        }
+
+        window.__ensureWritableFetch = ensureWritableGlobals;
+        ensureWritableGlobals();
+
+        if (typeof MutationObserver !== 'undefined' && document.documentElement) {
+          var obs = new MutationObserver(function () {
+            ensureWritableGlobals();
+          });
+          obs.observe(document.documentElement, { childList: true, subtree: true });
+          window.addEventListener(
+            'DOMContentLoaded',
+            function () {
+              ensureWritableGlobals();
+              obs.disconnect();
+            },
+            { once: true }
+          );
+        }
+
+        window.addEventListener(
+          'error',
+          function (event) {
+            var filename = String((event && event.filename) || '');
+            var msg = String((event && event.message) || '');
+            var stack = String((event && event.error && event.error.stack) || '');
+            if (
+              filename.indexOf('chrome-extension://') === 0 ||
+              filename.indexOf('moz-extension://') === 0 ||
+              stack.indexOf('chrome-extension://') !== -1 ||
+              stack.indexOf('moz-extension://') !== -1 ||
+              msg.indexOf('Cannot set property fetch') !== -1
+            ) {
+              event.stopImmediatePropagation();
+              event.preventDefault();
+              return false;
+            }
+          },
+          true
+        );
+
+        window.addEventListener(
+          'unhandledrejection',
+          function (event) {
+            var reason = event && event.reason;
+            var stack = String((reason && reason.stack) || '');
+            var msg = String((reason && reason.message) || reason || '');
+            if (
+              stack.indexOf('chrome-extension://') !== -1 ||
+              stack.indexOf('moz-extension://') !== -1 ||
+              msg.indexOf('Cannot set property fetch') !== -1
+            ) {
+              event.stopImmediatePropagation();
+              event.preventDefault();
+            }
+          },
+          true
+        );
+      })();
+    </script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pahtama Group — Shaloot Noodle Activation &amp; Sales System</title>
+    <meta
+      name="description"
+      content="Offline-first field activation, SKU &amp; FOC sales collection, 58mm/80mm Bluetooth thermal POS invoicing, and multi-branch national analytics system for Pahtama Group Co., Ltd."
+    />
+    <meta
+      property="og:title"
+      content="Pahtama Group — Shaloot Noodle Activation &amp; Sales System"
+    />
+    <meta
+      property="og:description"
+      content="Offline-first field activation, SKU &amp; FOC sales collection, 58mm/80mm Bluetooth thermal POS invoicing, and multi-branch national analytics system for Pahtama Group Co., Ltd."
+    />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="alternate icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Noto+Sans+Myanmar:wght@400;500;600;700&family=Padauk:wght@400;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+      crossorigin="anonymous"
+    />
+  </head>
+  <body class="antialiased selection:bg-amber-500/20 selection:text-amber-900">
+    <script>
+      if (window.__ensureWritableFetch) window.__ensureWritableFetch();
+    </script>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
+

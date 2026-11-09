@@ -1,0 +1,384 @@
+@import "tailwindcss";
+
+@layer base {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  html,
+  body,
+  #root {
+    width: 100%;
+    max-width: 100vw;
+    overflow-x: hidden;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+  }
+
+  body {
+    font-family: 'Plus Jakarta Sans', 'Padauk', 'Noto Sans Myanmar', -apple-system, BlinkMacSystemFont, sans-serif;
+    background-color: var(--bg-app, #F0F4F8);
+    color: var(--text-primary, #0F2C59);
+    transition: background-color 0.2s ease, color 0.2s ease;
+  }
+
+  .font-mono,
+  .tabular-nums {
+    font-family: 'JetBrains Mono', 'Padauk', 'Noto Sans Myanmar', ui-monospace, SFMono-Regular, monospace;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .thermal-receipt-font {
+    font-family: 'JetBrains Mono', 'Padauk', 'Noto Sans Myanmar', 'Myanmar Text', ui-monospace, monospace;
+    font-variant-numeric: tabular-nums;
+    font-kerning: normal;
+    font-feature-settings: "kern" 1, "liga" 1, "clig" 1;
+    letter-spacing: 0 !important;
+    line-height: 1.45;
+  }
+}
+
+/* Dynamic Light & Dark Theme CSS Variables */
+:root,
+.light-theme {
+  --bg-app: #F0F4F8;
+  --bg-card: #FFFFFF;
+  --bg-subtle: #E1E9F5;
+  --border-card: #CBD5E1;
+  --border-input: #CBD5E1;
+  --text-primary: #0F2C59;
+  --text-heading: #0F2C59;
+  --text-secondary: #334155;
+  --text-muted: #475569;
+  --text-label: #0F2C59;
+  --input-bg: #FFFFFF;
+  --input-text: #0F172A;
+  --input-placeholder: #64748B;
+  --btn-primary-bg: #0F2C59;
+  --btn-primary-hover: #1E3E62;
+  --btn-primary-text: #FFFFFF;
+}
+
+.dark-theme {
+  --bg-app: #0B192C;
+  --bg-card: #152A47;
+  --bg-subtle: #1E3E62;
+  --border-card: #2D4D77;
+  --border-input: #385E8E;
+  --text-primary: #F8FAFC;
+  --text-heading: #FFFFFF;
+  --text-secondary: #CBD5E1;
+  --text-muted: #94A3B8;
+  --text-label: #E2E8F0;
+  --input-bg: #0A192F;
+  --input-text: #F8FAFC;
+  --input-placeholder: #8EA4C2;
+  --btn-primary-bg: #2563EB;
+  --btn-primary-hover: #1D4ED8;
+  --btn-primary-text: #FFFFFF;
+}
+
+/* Corporate Deep Navy Dark Mode Surface Adaptation (excluding thermal receipt paper) */
+.dark-theme .app-surface-card {
+  background-color: #152A47;
+  border-color: #2D4D77;
+  color: #F8FAFC;
+}
+
+.dark-theme .app-surface-subtle {
+  background-color: #0F223A;
+  border-color: #2D4D77;
+  color: #E2E8F0;
+}
+
+.dark-theme main .bg-white:not(.receipt-container),
+.dark-theme .app-subtoolbar,
+.dark-theme .app-footer,
+.dark-theme .app-modal-panel {
+  background-color: #152A47 !important;
+  border-color: #2D4D77 !important;
+  color: #F8FAFC !important;
+}
+
+.dark-theme main .bg-slate-50:not(.receipt-container),
+.dark-theme main .bg-slate-100:not(.receipt-container),
+.dark-theme .app-modal-panel .bg-slate-50,
+.dark-theme .app-modal-panel .bg-slate-100 {
+  background-color: #0E2038 !important;
+  border-color: #2D4D77 !important;
+  color: #E2E8F0 !important;
+}
+
+.dark-theme main .border-slate-200,
+.dark-theme main .border-slate-100,
+.dark-theme main .border-slate-300,
+.dark-theme main .divide-slate-200 > :not([hidden]) ~ :not([hidden]),
+.dark-theme .app-modal-panel .border-slate-200,
+.dark-theme .app-modal-panel .border-slate-300 {
+  border-color: #2D4D77 !important;
+}
+
+.dark-theme main .text-slate-900,
+.dark-theme main .text-slate-800,
+.dark-theme main .text-\[\#0F2C59\],
+.dark-theme .app-subtoolbar .text-\[\#0F2C59\],
+.dark-theme .app-modal-panel .text-slate-900,
+.dark-theme .app-modal-panel .text-slate-800 {
+  color: #F8FAFC !important;
+}
+
+.dark-theme main .text-slate-700,
+.dark-theme main .text-slate-600,
+.dark-theme .app-subtoolbar .text-slate-600,
+.dark-theme .app-modal-panel .text-slate-700,
+.dark-theme .app-modal-panel .text-slate-600 {
+  color: #CBD5E1 !important;
+}
+
+.dark-theme main .text-slate-500,
+.dark-theme main .text-slate-400,
+.dark-theme .app-footer .text-slate-500,
+.dark-theme .app-modal-panel .text-slate-500 {
+  color: #94A3B8 !important;
+}
+
+.dark-theme main input:not([type="radio"]):not([type="checkbox"]),
+.dark-theme main select,
+.dark-theme main textarea,
+.dark-theme .app-modal-panel input:not([type="radio"]):not([type="checkbox"]),
+.dark-theme .app-modal-panel select,
+.dark-theme .app-modal-panel textarea {
+  background-color: #0A192F !important;
+  border-color: #385E8E !important;
+  color: #F8FAFC !important;
+}
+
+.dark-theme main input:disabled,
+.dark-theme main input[readonly] {
+  background-color: #11243E !important;
+  color: #94A3B8 !important;
+}
+
+.dark-theme main tr.hover\:bg-slate-50\/80:hover {
+  background-color: #1E3E62 !important;
+}
+
+/* Door Opening Transition Animations */
+@keyframes doorOpenSwing {
+  0% {
+    transform: perspective(600px) rotateY(0deg);
+  }
+  40% {
+    transform: perspective(600px) rotateY(-55deg);
+  }
+  80% {
+    transform: perspective(600px) rotateY(-80deg);
+  }
+  100% {
+    transform: perspective(600px) rotateY(-85deg);
+  }
+}
+
+@keyframes personStepIn {
+  0% {
+    opacity: 0;
+    transform: translateX(-16px) scale(0.85);
+  }
+  25% {
+    opacity: 0.95;
+    transform: translateX(-4px) scale(0.95);
+  }
+  70% {
+    opacity: 1;
+    transform: translateX(10px) scale(1.05);
+  }
+  100% {
+    opacity: 0.2;
+    transform: translateX(24px) scale(1.18);
+  }
+}
+
+@keyframes doorwayLightGlow {
+  0% {
+    opacity: 0.2;
+    transform: scale(0.9);
+  }
+  50% {
+    opacity: 0.9;
+    transform: scale(1.15);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1.25);
+  }
+}
+
+.animate-door-swing {
+  transform-origin: 38px 31px;
+  animation: doorOpenSwing 1.2s cubic-bezier(0.34, 1.2, 0.64, 1) forwards;
+}
+
+.animate-person-step {
+  animation: personStepIn 1.2s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
+
+.animate-door-glow {
+  animation: doorwayLightGlow 1.2s ease-out forwards;
+}
+
+/* Screen & html2canvas layout: Dedicated 58mm (384 dots) and 80mm (576 dots) container widths */
+#thermal-print-area[data-paper-width="58mm"],
+.receipt-container[data-paper-width="58mm"] {
+  width: 384px;
+  min-width: 384px;
+  max-width: 384px;
+  background-color: #ffffff !important;
+  color: #000000 !important;
+}
+
+#thermal-print-area[data-paper-width="80mm"],
+.receipt-container[data-paper-width="80mm"] {
+  width: 576px;
+  min-width: 576px;
+  max-width: 576px;
+  background-color: #ffffff !important;
+  color: #000000 !important;
+}
+
+#thermal-print-area,
+.receipt-container {
+  scrollbar-width: none !important;
+  -ms-overflow-style: none !important;
+  background-color: #ffffff !important;
+  color: #000000 !important;
+  font-family: 'JetBrains Mono', 'Padauk', 'Noto Sans Myanmar', 'Myanmar Text', monospace !important;
+  font-kerning: normal !important;
+  font-feature-settings: "kern" 1, "liga" 1, "clig" 1 !important;
+  letter-spacing: 0 !important;
+  word-break: normal !important;
+  overflow-wrap: break-word !important;
+}
+
+#thermal-print-area *,
+.receipt-container * {
+  letter-spacing: 0 !important;
+  max-width: 100%;
+}
+
+#thermal-print-area::-webkit-scrollbar,
+.receipt-container::-webkit-scrollbar {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+}
+
+/* Thermal Printer CSS Media Rules — True Printable Paper Widths (48mm for 58mm roll, 72mm for 80mm roll) */
+@media print {
+  @page {
+    size: auto;
+    margin: 0mm !important;
+  }
+
+  html,
+  body {
+    margin: 0 !important;
+    padding: 0 !important;
+    background: #ffffff !important;
+    color: #000000 !important;
+    height: auto !important;
+    width: auto !important;
+    max-width: 100% !important;
+    overflow-x: hidden !important;
+    overflow-y: visible !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  .no-print,
+  nav,
+  header,
+  footer,
+  button {
+    display: none !important;
+  }
+
+  #thermal-modal-root,
+  #thermal-modal-card,
+  #thermal-modal-viewport {
+    position: static !important;
+    display: block !important;
+    width: auto !important;
+    max-width: 100% !important;
+    max-height: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: none !important;
+    box-shadow: none !important;
+    background: #ffffff !important;
+    overflow: visible !important;
+  }
+
+  #thermal-print-area,
+  .receipt-container,
+  #print-area {
+    position: static !important;
+    display: block !important;
+    visibility: visible !important;
+    width: 72mm !important;
+    min-width: 0 !important;
+    max-width: 72mm !important;
+    margin: 0 auto !important;
+    padding: 1.5mm 1.5mm !important;
+    background: #ffffff !important;
+    color: #000000 !important;
+    box-shadow: none !important;
+    border: none !important;
+    overflow: hidden !important;
+    word-break: normal !important;
+    overflow-wrap: break-word !important;
+    text-transform: none !important;
+    letter-spacing: 0 !important;
+    font-size: 9pt !important;
+    line-height: 1.4 !important;
+    font-family: 'JetBrains Mono', 'Padauk', 'Noto Sans Myanmar', 'Myanmar Text', monospace !important;
+    font-feature-settings: "kern" 1, "liga" 1, "clig" 1 !important;
+  }
+
+  #thermal-print-area[data-paper-width="58mm"],
+  .receipt-container[data-paper-width="58mm"],
+  #print-area[data-paper-width="58mm"] {
+    width: 48mm !important;
+    min-width: 0 !important;
+    max-width: 48mm !important;
+    margin: 0 auto !important;
+    padding: 1.5mm 1mm !important;
+    font-size: 8pt !important;
+    line-height: 1.38 !important;
+  }
+
+  #thermal-print-area[data-paper-width="80mm"],
+  .receipt-container[data-paper-width="80mm"],
+  #print-area[data-paper-width="80mm"] {
+    width: 72mm !important;
+    min-width: 0 !important;
+    max-width: 72mm !important;
+    margin: 0 auto !important;
+    padding: 2mm 1.5mm !important;
+    font-size: 9pt !important;
+    line-height: 1.4 !important;
+  }
+
+  #thermal-print-area table,
+  #thermal-print-area .receipt-table,
+  #thermal-print-area .receipt-grid,
+  #thermal-print-area .receipt-row {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+  }
+}
+
+

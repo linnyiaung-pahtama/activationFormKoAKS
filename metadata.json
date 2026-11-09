@@ -1,0 +1,6 @@
+{
+  "name": "Pahtama Group — Shaloot Noodle Activation & Sales System",
+  "description": "Offline-first field activation, SKU & FOC sales collection, 58mm/80mm Bluetooth thermal POS invoicing, and multi-branch national analytics system for Pahtama Group Co., Ltd.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

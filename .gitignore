@@ -1,0 +1,21 @@
+node_modules/
+build/
+dist/
+coverage/
+.DS_Store
+*.log
+.env*
+!.env.example
+server_db.json
+data/
+
+# Real company / customer data - never commit (passwords, phone numbers, addresses)
+doc/
+*.csv
+*.xlsx
+# AI Studio leftovers (screenshots, old zipped copy of the code)
+.aistudio/
+public/assets/aistudio/
+# SQL Server database files
+*.mdf
+*.ldf
