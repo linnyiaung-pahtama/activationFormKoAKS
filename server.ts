@@ -658,7 +658,7 @@ function saveDatabase(db: ServerDatabase): void {
 
 async function startServer() {
   const app = express();
-  const PORT = 3000;
+  const PORT = Number(process.env.PORT) || 3000;
 
   // SQL Server data API (used by src/lib/sqlServerClient.ts). Registered before
   // the global 5mb JSON parser because bulk syncs can send large batches.
